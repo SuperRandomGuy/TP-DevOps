@@ -37,6 +37,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2.5.0
 
+      - name: Login to DockerHub
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Build image and push backend
         uses: docker/build-push-action@v3
         with:
@@ -48,14 +51,13 @@ jobs:
       - name: Build image and push database
         uses: docker/build-push-action@v3
         with:
-          context: ./database 
-          tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops/database
+          context: ./database
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops:database
+          push: ${{ github.ref == 'refs/heads/master' }}
 
       - name: Build image and push httpd
         uses: docker/build-push-action@v3
         with:
-          context: ./httpd  
-          tags: ${{secrets.DOCKERHUB_USERNAME}}/tp-devops/httpd
-
-      - name: Login to DockerHub
-        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+          context: ./httpd
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops:httpd
+          push: ${{ github.ref == 'refs/heads/master' }}
