@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+    backend:
+        container_name: tp1_student
+        build: ./backend
+        networks:
+            - app-network
+        depends_on:
+            - database
+
+    database:
+        container_name: db
+        build: ./database 
+        networks:
+            - app-network
+
+    httpd:
+        container_name: tp1_http
+        build: ./httpd
+        ports:
+            - "8080:80"
+        networks:
+            - app-network
+        depends_on:
+            - backend
+
+networks:
+    app-network:

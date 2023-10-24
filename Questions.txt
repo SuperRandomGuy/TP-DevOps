@@ -1,0 +1,51 @@
+1-1
+Dockerfile essentials
+
+Contenu du Docker file :
+FROM postgres:14.1-alpine
+
+ENV POSTGRES_DB=db \
+    POSTGRES_USER=usr \
+    POSTGRES_PASSWORD=pwd
+
+Commandes :
+
+"docker network create"
+Créer un réseau pour la communication entre les conteneurs
+
+"docker build"
+ build l'image Docker
+
+"docker run"
+exécuter le docker
+
+"docker run \
+    -p "8090:8080" \
+    --net=app-network \
+    --name=adminer \
+    -d \
+    adminer"
+administrer la base de donnée depuis une interface web
+
+
+1-2
+
+Le multistage permet d'effectuer plusieurs étapes les unes après les autres dans le même conteneur, ici on compile puis on run l'application directement depuis le conteneur au lieu de le faire à la main
+
+1-3
+
+La commande docker-compose permet de lancer, arrêter, et build tous les conteneurs automatiquement
+Dans le fichier docker-compose.yml, on renseigne pour chaque partie le nom, l'emplacement du dossier correspondant, ainsi que le réseau créé pour la communication
+
+1-5
+
+J'ai push les 3 parties database, backend et httpd avec les commandes :
+
+docker tag tp1-database nickchae/tp1-database:1.0
+docker push nickchae/tp1-database:1.0
+
+docker tag tp1-backend nickchae/tp1-backend:1.0
+docker push nickchae/tp1-backend:1.0
+
+docker tag tp1-httpd nickchae/tp1-httpd:1.0
+docker push nickchae/tp1-httpd:1.0
