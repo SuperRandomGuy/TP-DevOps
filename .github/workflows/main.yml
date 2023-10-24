@@ -38,11 +38,11 @@ jobs:
         uses: actions/checkout@v2.5.0
 
       - name: Build image and push backend
-          uses: docker/build-push-action@v3
-          with:
-            context: ./backend
-            tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops:backend
-            push: ${{ github.ref == 'refs/heads/master' }}
+        uses: docker/build-push-action@v3
+        with:
+          context: ./backend
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops:backend
+          push: ${{ github.ref == 'refs/heads/master' }}
 
 
       - name: Build image and push database
