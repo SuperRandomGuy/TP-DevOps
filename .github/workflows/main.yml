@@ -3,11 +3,11 @@ name: CI DevOps 2023
 on:
   push:
     branches:
-      - main
+      - master
       - develop
   pull_request:
     branches:
-      - main
+      - master
       - develop
 
 jobs:
