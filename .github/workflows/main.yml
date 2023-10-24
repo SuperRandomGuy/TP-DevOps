@@ -26,4 +26,5 @@ jobs:
 
       - name: Build and test with Maven
         run: |
+          cd /home/runner/work/TP-DevOps/TP-DevOps/backend
           mvn clean verify
