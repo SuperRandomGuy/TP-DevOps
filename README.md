@@ -144,13 +144,13 @@ Configuration des tâches docker_container :
 Utilise le rôle 'install-docker' pour installer Docker sur le serveur.
 
 #### Créer un Réseau :
-Utilise le module 'create-network' pour créer un réseau Docker.
+Utilise le rôle 'create-network' pour créer un réseau Docker.
 
 #### Lancer la Base de Données :
-Utilise le module 'launch-database' pour démarrer un conteneur Docker pour la base de données.
+Utilise le rôle 'launch-database' pour démarrer un conteneur Docker pour la base de données.
 
 #### Lancer l'Application :
-Utilise le module 'launch-app' pour démarrer un conteneur Docker pour le backend.
+Utilise le rôle 'launch-app' pour démarrer un conteneur Docker pour le backend.
 
 #### Lancer le Proxy :
-Utilise le module 'launch-proxy' pour démarrer un conteneur Docker pour le proxy http.
+Utilise le rôle 'launch-proxy' pour démarrer un conteneur Docker pour le proxy http.
