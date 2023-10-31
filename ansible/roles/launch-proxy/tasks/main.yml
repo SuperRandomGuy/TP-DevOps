@@ -1,0 +1,8 @@
+---
+- name: Run HTTPD
+  docker_container:
+    name: tp1_http
+    ports: 80:80
+    image: nickchae/tp1-httpd:1.0
+    networks:
+      - name: app-network

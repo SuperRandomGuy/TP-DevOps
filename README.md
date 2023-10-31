@@ -92,3 +92,65 @@ mvn -B verify sonar:sonar -Dsonar.projectKey=SuperRandomGuy_TP-DevOps -Dsonar.or
 ```
 Le workflow fonctionne et le quality gate de SonarCloud passe avec succès
 
+## 3-1
+
+Voici le fichier setup.yml dans l'inventory
+```
+all:
+ vars:
+   ansible_user: centos
+   ansible_ssh_private_key_file: "/home/nickchae/id_rsa"
+ children:
+   prod:
+     hosts: nicolas.coulomb.takima.cloud
+```
+
+Le fichier setup.yml est un fichier d'inventaire Ansible qui définit des variables et des groupes de serveurs.
+
+#### Commandes :
+```ansible all -i inventories/setup.yml -m ping``` : Vérifier la connectivité aux serveurs répertoriés dans l'inventaire en utilisant le module "ping" d'Ansible.
+
+```ansible all -i inventories/setup.yml -m setup -a "filter=ansible_distribution*"``` : Collecter des informations sur les serveurs, notamment la distribution du système d'exploitation, en utilisant le module "setup" d'Ansible.
+
+```ansible all -i inventories/setup.yml -m yum -a "name=httpd state=absent"``` --become : Supprimer le serveur Apache httpd des serveurs en utilisant le module "yum" d'Ansible.
+
+## 3-2
+
+Le playbook comprend des tâches pour installer les dépendances, ajouter le référentiel Docker, installer Docker et garantir que Docker est en cours d'exécution.
+Pour exécuter le playbook d'installation Docker, utilisez la commande : ```ansible-playbook -i inventories/setup.yml docker-install.yml```. Le playbook installe Docker sur le serveur.
+
+Pour une meilleure approche, les tâches d'installation Docker sont organisées en un rôle. Le rôle est créé avec ```ansible-galaxy init``` 
+Ici on met l'installation dans le role install-docker
+Le playbook appelle le rôle docker ainsi que les rôles dédiés au backend, à la db et au proxy comme cela :
+
+```
+- name: "Deploy app"
+  hosts: all
+  gather_facts: false
+  become: true
+  roles :
+    - install-docker
+    - create-network
+    - launch-database
+    - launch-app
+    - launch-proxy
+```
+
+## Déploiement de votre Application avec Ansible
+
+Configuration des tâches docker_container :
+
+#### Installer Docker :
+Utilise le rôle 'install-docker' pour installer Docker sur le serveur.
+
+#### Créer un Réseau :
+Utilise le module 'create-network' pour créer un réseau Docker.
+
+#### Lancer la Base de Données :
+Utilise le module 'launch-database' pour démarrer un conteneur Docker pour la base de données.
+
+#### Lancer l'Application :
+Utilise le module 'launch-app' pour démarrer un conteneur Docker pour le backend.
+
+#### Lancer le Proxy :
+Utilise le module 'launch-proxy' pour démarrer un conteneur Docker pour le proxy http.

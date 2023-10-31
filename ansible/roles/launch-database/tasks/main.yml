@@ -1,0 +1,8 @@
+---
+
+- name: Run database
+  docker_container:
+    name: db
+    image: nickchae/tp1-database:1.0
+    networks:
+      - name: app-network

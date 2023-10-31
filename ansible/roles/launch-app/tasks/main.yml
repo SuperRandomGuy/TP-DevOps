@@ -1,0 +1,8 @@
+---
+
+- name: Run backend
+  docker_container:
+    name: tp1_student
+    image: nickchae/tp1-backend:1.0
+    networks:
+      - name: app-network
